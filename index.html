@@ -24,31 +24,74 @@
         </div>
 
         <!-- STEP 1: Logo Processing Section -->
-        <!-- STEP 1: Logo Processing Section -->
-<section id="step1" class="step-content active">
-    <!-- File upload area with drag & drop support -->
-    <label for="logoInput" class="upload-area" style="cursor: pointer; display: block;">
-        <div style="font-size:36px">📁</div>
-        <div style="margin-top:6px; font-weight:700">Upload or Drag & Drop Your Logo</div>
-        <div class="chip" style="margin-top:8px">PNG / JPG / JPEG</div>
-        <!-- File input - properly hidden but clickable -->
-        <input id="logoInput" type="file" accept="image/png,image/jpg,image/jpeg" 
-               style="position: absolute; left: -9999px; opacity: 0;" />
-    </label>
-    
-    <!-- Rest of your code stays the same -->
-    <div id="logoTools" class="grid-2" style="margin-top:18px; display:none">
-        <!-- ... your existing logoTools content ... -->
-    </div>
-    
-    <div id="logoResult" style="margin-top:16px"></div>
-    
-    <div style="margin-top:16px" class="inline">
-        <button id="btnDownloadSVGLogo" class="btn secondary" disabled>Download Vector SVG</button>
-        <button id="toStep2" class="btn" disabled>Next → Banner Config</button>
-    </div>
-</section>
+        <section id="step1" class="step-content active">
+            <!-- File upload area with drag & drop support -->
+            <div class="upload-area" id="logoDrop">
+                <div style="font-size:36px">📁</div>
+                <div style="margin-top:6px; font-weight:700">Upload or Drag & Drop Your Logo</div>
+                <div class="chip" style="margin-top:8px">PNG / JPG / JPEG</div>
+                <!-- Hidden file input for logo selection -->
+                <input id="logoInput" class="file-input" type="file" accept="image/png,image/jpg,image/jpeg" />
+            </div>
 
+            <!-- Logo processing tools - hidden until logo is uploaded -->
+            <div id="logoTools" class="grid-2" style="margin-top:18px; display:none">
+                <div class="section">
+                    <h3>Vectorizer</h3>
+                    
+                    <!-- Threshold control - HIDDEN but functional with fixed value 0.7 -->
+                    <div class="form-group inline" style="display:none;">
+                        <label class="label" for="threshold">Sensitivity</label>
+                        <input id="threshold" type="range" min="0.3" max="0.7" step="0.1" value="0.7" />
+                        <span id="thresholdVal" class="chip">Sharp</span>
+                    </div>
+                    
+                    <!-- Color selection controls - FULLY RESTORED -->
+                    <div class="form-group">
+                        <label class="label">Logo Color Selection</label>
+                        <div class="inline" style="flex-wrap: wrap; gap: 12px;">
+                            <!-- Toggle for custom color vs original colors -->
+                            <label style="display: flex; align-items: center; gap: 6px;">
+                                <input type="checkbox" id="preserveColor" checked /> 
+                                Use custom color
+                            </label>
+                            <!-- Color picker, hex input, and preview -->
+                            <div class="inline" style="gap: 8px;">
+                                <input type="color" id="logoColor" value="#ffffff" />
+                                <input type="text" id="hexInput" class="hex-input" placeholder="#ffffff" value="#ffffff" />
+                                <div class="color-preview" id="colorPreview" style="background-color: #ffffff;"></div>
+                            </div>
+                            <!-- Quick color buttons -->
+                            <div class="inline" style="gap: 6px;">
+                                <button class="btn chip" onclick="window.logoApp && window.logoApp.updateColor('#ffffff')">White</button>
+                                <button class="btn chip" onclick="window.logoApp && window.logoApp.updateColor('#000000')">Black</button>
+                            </div>
+                        </div>
+                        <!-- Help text explaining color options -->
+                        <div style="margin-top: 8px; font-size: 12px; color: #6b7280;">
+                            💡 Uncheck to use original logo colors, or pick/enter a custom color
+                        </div>
+                    </div>
+
+                    <!-- Processing action buttons -->
+                    <div class="form-group inline">
+                        <button class="btn secondary" id="btnConvertBitmap">Convert to Bitmap</button>
+                        <button class="btn" id="btnVectorize" disabled>🎯 Create Vector </button>
+                    </div>
+                    <!-- Status indicator for processing steps -->
+                    <div id="bitmapStatus" class="chip">Ready for bitmap conversion</div>
+                </div>
+            </div>
+
+            <!-- Preview area for processed logo stages -->
+            <div id="logoResult" style="margin-top:16px"></div>
+            
+            <!-- Navigation and download buttons -->
+            <div style="margin-top:16px" class="inline">
+                <button id="btnDownloadSVGLogo" class="btn secondary" disabled>Download Vector SVG</button>
+                <button id="toStep2" class="btn" disabled>Next → Banner Config</button>
+            </div>
+        </section>
 
         <!-- STEP 2: Banner Configuration Section -->
         <section id="step2" class="step-content">
@@ -183,4 +226,3 @@
     <script type="module" src="js/app.js"></script>
 </body>
 </html>
-
