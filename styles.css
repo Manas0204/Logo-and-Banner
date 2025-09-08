@@ -1,0 +1,546 @@
+/**
+ * LOGO VECTORIZER & BANNER COMPOSER - STYLES
+ * 
+ * This stylesheet contains all the visual styling for the application.
+ * Organized in sections: Reset, Layout, Components, States, and Responsive.
+ */
+
+/* ==================== RESET & BASE STYLES ==================== */
+
+* {
+    box-sizing: border-box; /* Consistent box model across all elements */
+}
+
+body {
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; /* Modern system font stack */
+    background: #0f172a; /* Dark blue background for contrast */
+    color: #0b1324; /* Dark text color */
+    margin: 0; /* Remove default margin */
+}
+
+/* ==================== MAIN LAYOUT COMPONENTS ==================== */
+
+/* Main application container */
+.container {
+    max-width: 1200px; /* Limit width for readability */
+    margin: 24px auto; /* Center horizontally with top/bottom margin */
+    background: #fff; /* Clean white background */
+    border-radius: 16px; /* Rounded corners for modern look */
+    overflow: hidden; /* Ensure children don't break border radius */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, .15); /* Dramatic shadow for depth */
+}
+
+/* Application header with gradient */
+.header {
+    padding: 28px; /* Generous padding */
+    color: #fff; /* White text for contrast */
+    background: linear-gradient(135deg, #2563eb, #22c1c3); /* Blue to teal gradient */
+}
+
+.header h1 {
+    margin: 0 0 6px; /* Remove default margin, small bottom spacing */
+    font-weight: 700; /* Bold weight */
+    font-size: 28px; /* Large, attention-grabbing size */
+}
+
+/* ==================== STEP NAVIGATION ==================== */
+
+/* Step navigation container */
+.steps {
+    display: flex; /* Horizontal layout */
+    border-bottom: 1px solid #e5e7eb; /* Subtle bottom border */
+    background: #f8fafc; /* Light gray background */
+}
+
+/* Individual step button */
+.step {
+    flex: 1; /* Equal width distribution */
+    padding: 14px; /* Comfortable click area */
+    text-align: center; /* Center text */
+    cursor: pointer; /* Indicate clickability */
+    font-weight: 600; /* Semi-bold text */
+    user-select: none; /* Prevent text selection */
+    border-right: 1px solid #e5e7eb; /* Separator line */
+}
+
+.step:last-child {
+    border-right: none; /* Remove border from last step */
+}
+
+/* Active step styling */
+.step.active {
+    background: #2563eb; /* Blue background */
+    color: #fff; /* White text */
+}
+
+/* Completed step styling */
+.step.completed {
+    background: #16a34a; /* Green background */
+    color: #fff; /* White text */
+}
+
+/* ==================== STEP CONTENT SECTIONS ==================== */
+
+/* Step content container */
+.step-content {
+    display: none; /* Hidden by default */
+    padding: 28px; /* Generous padding */
+}
+
+/* Show active step content */
+.step-content.active {
+    display: block;
+}
+
+/* ==================== UPLOAD COMPONENTS ==================== */
+
+/* File upload drop zone */
+.upload-area {
+    border: 2px dashed #2563eb; /* Dashed blue border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 40px; /* Large padding for drop target */
+    text-align: center; /* Center content */
+    cursor: pointer; /* Indicate clickability */
+    background: #f1f5f9; /* Light blue background */
+}
+
+/* Hover state for upload area */
+.upload-area:hover {
+    background: #e2e8f0; /* Darker on hover */
+}
+
+/* Hide actual file input */
+.file-input {
+    display: none;
+}
+
+/* ==================== GRID LAYOUTS ==================== */
+
+/* 2-column grid (used for logo tools) */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column by default */
+    gap: 20px; /* Space between grid items */
+}
+
+/* 3-column grid (used for banner config) */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three equal columns */
+    gap: 16px; /* Space between grid items */
+}
+
+/* ==================== SECTION COMPONENTS ==================== */
+
+/* Content section container */
+.section {
+    background: #f8fafc; /* Light background */
+    border: 1px solid #e5e7eb; /* Subtle border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 18px; /* Internal spacing */
+}
+
+/* Section headers */
+.section h3 {
+    margin: 0 0 10px; /* Remove top margin, small bottom */
+    font-size: 16px; /* Readable size */
+}
+
+/* ==================== FORM COMPONENTS ==================== */
+
+/* Form group container */
+.form-group {
+    margin-bottom: 14px; /* Space between form groups */
+}
+
+/* Form labels */
+.label {
+    display: block; /* Full width */
+    font-weight: 600; /* Semi-bold */
+    margin-bottom: 6px; /* Space before input */
+    color: #334155; /* Dark gray color */
+}
+
+/* Text inputs, numbers, and ranges */
+.control,
+input[type="number"],
+input[type="text"],
+input[type="range"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Comfortable padding */
+    border: 2px solid #e5e7eb; /* Subtle border */
+    border-radius: 10px; /* Rounded corners */
+    font: inherit; /* Use parent font */
+}
+
+/* Color picker inputs */
+input[type="color"] {
+    width: 60px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Inline flex container */
+.inline {
+    display: flex; /* Horizontal layout */
+    gap: 10px; /* Space between items */
+    align-items: center; /* Vertical center alignment */
+    flex-wrap: wrap; /* Wrap on small screens */
+}
+
+/* ==================== POSITION GRID ==================== */
+
+/* Logo position selection grid */
+.position-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3x3 grid */
+    gap: 8px; /* Small gaps between buttons */
+}
+
+/* Position selection buttons */
+.btn-pos {
+    padding: 10px; /* Comfortable click area */
+    border: 2px solid #e5e7eb; /* Default border */
+    border-radius: 10px; /* Rounded corners */
+    background: #fff; /* White background */
+    cursor: pointer; /* Indicate clickability */
+    font-size: 12px; /* Small text */
+}
+
+/* Active position button */
+.btn-pos.active {
+    background: #2563eb; /* Blue background */
+    color: #fff; /* White text */
+    border-color: #2563eb; /* Blue border */
+}
+
+/* ==================== BUTTON COMPONENTS ==================== */
+
+/* Primary button styling */
+.btn {
+    background: linear-gradient(45deg, #2563eb, #22c1c3); /* Blue to teal gradient */
+    color: #fff; /* White text */
+    border: none; /* Remove default border */
+    padding: 12px 18px; /* Comfortable padding */
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Indicate clickability */
+    font-weight: 700; /* Bold text */
+    box-shadow: 0 6px 14px rgba(37, 99, 235, .25); /* Subtle shadow */
+}
+
+/* Disabled button state */
+.btn:disabled {
+    opacity: .5; /* Faded appearance */
+    cursor: not-allowed; /* Indicate non-clickable */
+    box-shadow: none; /* Remove shadow */
+}
+
+/* Secondary button variant */
+.btn.secondary {
+    background: linear-gradient(45deg, #f59e0b, #f97316); /* Orange gradient */
+    box-shadow: 0 6px 14px rgba(249, 115, 22, .25); /* Orange shadow */
+}
+
+/* Danger button variant */
+.btn.danger {
+    background: linear-gradient(45deg, #ef4444, #f87171); /* Red gradient */
+    box-shadow: 0 6px 14px rgba(239, 68, 68, .25); /* Red shadow */
+}
+
+/* ==================== UI ELEMENTS ==================== */
+
+/* Chip/badge component */
+.chip {
+    padding: 6px 10px; /* Compact padding */
+    background: #e2e8f0; /* Light gray background */
+    border-radius: 9999px; /* Fully rounded (pill shape) */
+    font-size: 12px; /* Small text */
+    font-weight: 700; /* Bold text */
+}
+
+/* Preview area container */
+.preview-area {
+    background: #f8fafc; /* Light background */
+    border: 1px solid #e5e7eb; /* Subtle border */
+    border-radius: 12px; /* Rounded corners */
+    padding: 18px; /* Internal spacing */
+    display: flex; /* Flex layout for centering */
+    align-items: center; /* Vertical center */
+    justify-content: center; /* Horizontal center */
+    min-height: 320px; /* Minimum height */
+    overflow: auto; /* Scroll if needed */
+}
+
+/* Banner preview image */
+.banner-preview {
+    max-width: 100%; /* Responsive width */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .08); /* Subtle shadow */
+}
+
+/* Code display block */
+.code {
+    background: #0f172a; /* Dark background */
+    color: #e2e8f0; /* Light text */
+    padding: 14px; /* Internal spacing */
+    border-radius: 10px; /* Rounded corners */
+    max-height: 260px; /* Limit height */
+    overflow: auto; /* Scroll if needed */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; /* Monospace font */
+    font-size: 12px; /* Small, readable size */
+}
+
+/* ==================== MESSAGE COMPONENTS ==================== */
+
+/* Base message styling */
+.msg {
+    border-left: 4px solid; /* Left border indicator */
+    padding: 10px 12px; /* Comfortable padding */
+    border-radius: 10px; /* Rounded corners */
+    margin: 12px 0; /* Vertical spacing */
+}
+
+/* Success message */
+.msg.ok {
+    background: #ecfdf5; /* Light green background */
+    border-color: #10b981; /* Green border */
+    color: #065f46; /* Dark green text */
+}
+
+/* Error message */
+.msg.err {
+    background: #fef2f2; /* Light red background */
+    border-color: #ef4444; /* Red border */
+    color: #7f1d1d; /* Dark red text */
+}
+
+/* ==================== SPECIAL BACKGROUNDS ==================== */
+
+/* Transparent background pattern */
+.trans-bg {
+    background-image: 
+        linear-gradient(45deg, #bbb 25%, transparent 25%), 
+        linear-gradient(-45deg, #bbb 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #bbb 75%), 
+        linear-gradient(-45deg, transparent 75%, #bbb 75%);
+    background-size: 20px 20px; /* Checkerboard size */
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0; /* Offset pattern */
+}
+
+/* ==================== MODE SELECTION ==================== */
+
+/* Mode tabs container */
+.mode-tabs {
+    display: flex; /* Horizontal layout */
+    gap: 10px; /* Space between tabs */
+    background: #f1f5f9; /* Light background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 6px; /* Internal spacing */
+}
+
+/* Individual mode button */
+.mode-btn {
+    flex: 1; /* Equal width distribution */
+    border: none; /* Remove default border */
+    background: transparent; /* Transparent by default */
+    padding: 10px; /* Comfortable padding */
+    border-radius: 8px; /* Rounded corners */
+    font-weight: 700; /* Bold text */
+    cursor: pointer; /* Indicate clickability */
+}
+
+/* Active mode button */
+.mode-btn.active {
+    background: #2563eb; /* Blue background */
+    color: #fff; /* White text */
+}
+
+/* ==================== LOADING ANIMATION ==================== */
+
+/* Loading spinner */
+.loading {
+    display: inline-block; /* Inline positioning */
+    animation: spin 1s linear infinite; /* Continuous rotation */
+}
+
+/* Spin animation keyframes */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ==================== CUSTOM COMPONENTS ==================== */
+
+/* Color preview square */
+.color-preview {
+    width: 30px; /* Fixed width */
+    height: 30px; /* Fixed height */
+    border-radius: 4px; /* Slightly rounded */
+    border: 1px solid #ddd; /* Subtle border */
+    display: inline-block; /* Inline positioning */
+    margin-left: 10px; /* Space from adjacent elements */
+}
+
+/* Hex color input field */
+.hex-input {
+    width: 120px; /* Fixed width for hex codes */
+    padding: 8px; /* Comfortable padding */
+    border: 2px solid #e5e7eb; /* Subtle border */
+    border-radius: 8px; /* Rounded corners */
+    font-family: monospace; /* Monospace for hex codes */
+    font-size: 14px; /* Readable size */
+}
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+
+/* Tablet breakpoint */
+@media (max-width: 900px) {
+    /* Convert grids to single column on medium screens */
+    .grid-2,
+    .grid-3 {
+        grid-template-columns: 1fr;
+    }
+
+    /* Smaller text for navigation steps */
+    .step {
+        font-size: 14px;
+    }
+
+    /* Smaller header title on tablet */
+    .header h1 {
+        font-size: 22px;
+    }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+    .container {
+        margin: 12px;
+        border-radius: 12px;
+    }
+
+    .header {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+
+    .step-content {
+        padding: 20px;
+    }
+
+    /* Make steps vertical on mobile */
+    .steps {
+        flex-direction: column;
+    }
+
+    .step {
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .step:last-child {
+        border-bottom: none;
+    }
+
+    /* Stack form controls vertically */
+    .inline {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    /* Make buttons full width */
+    .btn {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    /* Smaller upload areas */
+    .upload-area {
+        padding: 30px 20px;
+    }
+
+    /* Better grid spacing */
+    .grid-2, .grid-3 {
+        gap: 12px;
+    }
+
+    /* Position grid responsive */
+    .position-grid {
+        gap: 6px;
+    }
+
+    .btn-pos {
+        padding: 8px;
+        font-size: 10px;
+    }
+
+    /* Preview area adjustments */
+    .preview-area {
+        padding: 12px;
+        min-height: 200px;
+    }
+
+    .banner-preview {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Color controls stacking */
+    .form-group .inline[style*="flex-wrap"] {
+        flex-direction: column;
+    }
+
+    input[type="color"] {
+        width: 100%;
+        height: 50px;
+    }
+
+    .hex-input {
+        width: 100%;
+    }
+
+    /* Mode tabs vertical */
+    .mode-tabs {
+        flex-direction: column;
+    }
+
+    /* Chip buttons stack better */
+    .chip {
+        margin-bottom: 4px;
+    }
+}
+
+/* Touch-friendly improvements for all devices */
+.btn, .btn-pos, .mode-btn {
+    min-height: 44px; /* iOS recommended touch target */
+    touch-action: manipulation; /* Prevent zoom on double tap */
+}
+
+input[type="range"] {
+    height: 44px;
+}
+
+/* Better mobile interactions */
+@media (hover: none) and (pointer: coarse) {
+    .btn:hover, .btn-pos:hover, .upload-area:hover {
+        /* Remove hover effects on touch devices */
+        background: inherit;
+    }
+    
+    /* Larger touch targets for mobile */
+    .chip {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+    }
+}

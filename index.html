@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image-to-SVG & Banner Composer</title>
+    <!-- External stylesheet for all UI styling -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main application container -->
+    <div class="container">
+        <!-- Header section with app title and description -->
+        <div class="header">
+            <h1>Precision Vector Conversion + Banner Builder</h1>
+            <div>Upload your logo --> Choose color and convert to precise vectors --> Design banners --> Export instantly</div>
+        </div>
+        
+        <!-- Step navigation bar - shows current progress -->
+        <div class="steps">
+            <div class="step active" data-step="1">Step 1 · Logo → Vector SVG</div>
+            <div class="step" data-step="2">Step 2 · Banner Config</div>
+            <div class="step" data-step="3">Step 3 · Download</div>
+        </div>
+
+        <!-- STEP 1: Logo Processing Section -->
+        <section id="step1" class="step-content active">
+            <!-- File upload area with drag & drop support -->
+            <div class="upload-area" id="logoDrop">
+                <div style="font-size:36px">📁</div>
+                <div style="margin-top:6px; font-weight:700">Upload or Drag & Drop Your Logo</div>
+                <div class="chip" style="margin-top:8px">PNG / JPG / JPEG</div>
+                <!-- Hidden file input for logo selection -->
+                <input id="logoInput" class="file-input" type="file" accept="image/png,image/jpg,image/jpeg" />
+            </div>
+
+            <!-- Logo processing tools - hidden until logo is uploaded -->
+            <div id="logoTools" class="grid-2" style="margin-top:18px; display:none">
+                <div class="section">
+                    <h3>Vectorizer</h3>
+                    
+                    <!-- Threshold control - HIDDEN but functional with fixed value 0.7 -->
+                    <div class="form-group inline" style="display:none;">
+                        <label class="label" for="threshold">Sensitivity</label>
+                        <input id="threshold" type="range" min="0.3" max="0.7" step="0.1" value="0.7" />
+                        <span id="thresholdVal" class="chip">Sharp</span>
+                    </div>
+                    
+                    <!-- Color selection controls - FULLY RESTORED -->
+                    <div class="form-group">
+                        <label class="label">Logo Color Selection</label>
+                        <div class="inline" style="flex-wrap: wrap; gap: 12px;">
+                            <!-- Toggle for custom color vs original colors -->
+                            <label style="display: flex; align-items: center; gap: 6px;">
+                                <input type="checkbox" id="preserveColor" checked /> 
+                                Use custom color
+                            </label>
+                            <!-- Color picker, hex input, and preview -->
+                            <div class="inline" style="gap: 8px;">
+                                <input type="color" id="logoColor" value="#ffffff" />
+                                <input type="text" id="hexInput" class="hex-input" placeholder="#ffffff" value="#ffffff" />
+                                <div class="color-preview" id="colorPreview" style="background-color: #ffffff;"></div>
+                            </div>
+                            <!-- Quick color buttons -->
+                            <div class="inline" style="gap: 6px;">
+                                <button class="btn chip" onclick="window.logoApp && window.logoApp.updateColor('#ffffff')">White</button>
+                                <button class="btn chip" onclick="window.logoApp && window.logoApp.updateColor('#000000')">Black</button>
+                            </div>
+                        </div>
+                        <!-- Help text explaining color options -->
+                        <div style="margin-top: 8px; font-size: 12px; color: #6b7280;">
+                            💡 Uncheck to use original logo colors, or pick/enter a custom color
+                        </div>
+                    </div>
+
+                    <!-- Processing action buttons -->
+                    <div class="form-group inline">
+                        <button class="btn secondary" id="btnConvertBitmap">Convert to Bitmap</button>
+                        <button class="btn" id="btnVectorize" disabled>🎯 Create Vector </button>
+                    </div>
+                    <!-- Status indicator for processing steps -->
+                    <div id="bitmapStatus" class="chip">Ready for bitmap conversion</div>
+                </div>
+            </div>
+
+            <!-- Preview area for processed logo stages -->
+            <div id="logoResult" style="margin-top:16px"></div>
+            
+            <!-- Navigation and download buttons -->
+            <div style="margin-top:16px" class="inline">
+                <button id="btnDownloadSVGLogo" class="btn secondary" disabled>Download Vector SVG</button>
+                <button id="toStep2" class="btn" disabled>Next → Banner Config</button>
+            </div>
+        </section>
+
+        <!-- STEP 2: Banner Configuration Section -->
+        <section id="step2" class="step-content">
+            <!-- Mode selection: create new vs upload existing banner -->
+            <div class="mode-tabs">
+                <button id="modeCreate" class="mode-btn active">Create new banner</button>
+                <button id="modeUpload" class="mode-btn">Upload existing banner</button>
+            </div>
+
+            <!-- Banner upload area - shown when upload mode is selected -->
+            <div id="uploadWrap" style="display:none; margin-top:10px" class="section">
+                <div class="upload-area" id="bannerDrop">
+                    <div style="font-size:32px">🖼️</div>
+                    <div style="margin-top:6px; font-weight:700">Drop banner or click to browse</div>
+                    <div class="chip" style="margin-top:8px">PNG / JPG / JPEG</div>
+                    <!-- Hidden file input for banner upload -->
+                    <input id="bannerInput" class="file-input" type="file" accept="image/png,image/jpg,image/jpeg" />
+                </div>
+                <!-- Banner upload status and info -->
+                <div id="bannerUploadInfo" style="margin-top:10px"></div>
+            </div>
+
+            <!-- Banner configuration controls in 3-column grid -->
+            <div class="grid-3" style="margin-top:12px">
+                <!-- Column 1: Template and Size Controls -->
+                <div class="section">
+                    <h3>Template & Size</h3>
+                    
+                    <!-- Quick Presets -->
+                    <div class="form-group">
+                        <label class="label">Quick Presets</label>
+                        <div class="inline" style="flex-wrap:wrap; gap:8px;">
+                            <button class="btn chip" onclick="window.logoApp && window.logoApp.applyPreset('social')">Social Media</button>
+                            <button class="btn chip" onclick="window.logoApp && window.logoApp.applyPreset('business')">Business</button>
+                            <button class="btn chip" onclick="window.logoApp && window.logoApp.applyPreset('web')">Web Banner</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Template type selection buttons -->
+                    <div id="tmplBtns" class="inline" style="flex-wrap:wrap">
+                        <button class="btn chip" data-tmpl="solid">Solid</button>
+                        <button class="btn chip active" data-tmpl="gradient">Gradient</button>
+                        <button class="btn chip" data-tmpl="pattern">Pattern</button>
+                    </div>
+                    
+                    <!-- Preset size buttons for common social media formats -->
+                    <div class="form-group inline" style="margin-top:10px; flex-wrap:wrap">
+                        <button class="btn chip" data-size="1920x1080">HD 1920×1080</button>
+                        <button class="btn chip active" data-size="1200x630">Facebook 1200×630</button>
+                        <button class="btn chip" data-size="1584x396">LinkedIn 1584×396</button>
+                        <button class="btn chip" data-size="1500x500">Twitter 1500×500</button>
+                        <button class="btn chip" data-size="728x90">Web 728×90</button>
+                    </div>
+                    
+                    <!-- Custom width and height inputs -->
+                    <div class="grid-2">
+                        <div class="form-group"><label class="label">Width</label><input id="w" type="number" value="1200" min="200" max="3000" /></div>
+                        <div class="form-group"><label class="label">Height</label><input id="h" type="number" value="630" min="100" max="2000" /></div>
+                    </div>
+                </div>
+
+                <!-- Column 2: Colors and Text Controls -->
+                <div class="section">
+                    <h3>Colors & Text</h3>
+                    <!-- Background color controls for gradient -->
+                    <div class="form-group inline">
+                        <label class="label" style="margin:0">Background</label>
+                        <input id="bg" type="color" value="#ffffff" />
+                        <span class="chip">Start</span>
+                        <input id="grad" type="color" value="#2563eb" />
+                        <span class="chip">End / Pattern</span>
+                    </div>
+                    <!-- Optional banner text input -->
+                    <div class="form-group"><label class="label">Banner Text (optional)</label><input id="txt" type="text" class="control" placeholder="Enter text" /></div>
+                    <!-- Text position selection -->
+                    <div class="form-group inline">
+                        <label class="label" style="margin:0">Text position</label>
+                        <label class="inline" style="gap:6px"><input type="radio" name="tpos" value="top" /> Top</label>
+                        <label class="inline" style="gap:6px"><input type="radio" name="tpos" value="bottom" checked /> Bottom</label>
+                    </div>
+                    <!-- Text color picker -->
+                    <div class="form-group inline">
+                        <label class="label" style="margin:0">Text color</label>
+                        <input id="tcol" type="color" value="#ffffff" />
+                    </div>
+                    <!-- Font size slider -->
+                    <div class="form-group inline">
+                        <label class="label" style="margin:0">Font size</label>
+                        <input id="fs" type="range" min="16" max="72" value="36" />
+                        <span id="fsVal" class="chip">36px</span>
+                    </div>
+                </div>
+
+                <!-- Column 3: Logo Positioning Controls -->
+                <div class="section">
+                    <h3>Logo Settings</h3>
+                    <!-- 3x3 grid for logo position selection -->
+                    <div class="position-grid" id="posGrid"></div>
+                    <!-- Logo size slider -->
+                    <div class="form-group inline" style="margin-top:10px">
+                        <label class="label" style="margin:0">Logo size</label>
+                        <input id="ls" type="range" min="10" max="80" value="25" />
+                        <span id="lsVal" class="chip">25%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner preview area -->
+            <div class="preview-area" id="preview" style="margin-top:12px"><em>Preview will appear here…</em></div>
+            
+            <!-- Preview generation and navigation buttons -->
+            <div class="inline" style="margin-top:12px">
+                <button id="btnPreview" class="btn">Generate preview</button>
+                <button id="toStep3" class="btn" disabled>Next → Download</button>
+            </div>
+        </section>
+
+        <!-- STEP 3: Final Download Section -->
+        <section id="step3" class="step-content">
+            <!-- Final banner display area -->
+            <div class="preview-area" id="final"><em>Final banner will appear here…</em></div>
+            
+            <!-- Download and restart buttons -->
+            <div class="inline" style="margin-top:12px">
+                <button id="dlPNG" class="btn">Download PNG</button>
+                <button id="restart" class="btn danger">Start over</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Load main application module -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
